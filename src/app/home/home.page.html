@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Test de Conexión a la API
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <!-- Mostrar el mensaje recibido de la API -->
+    <ion-text>
+      <h2>{{ message }}</h2>
+    </ion-text>
+
+    <!-- Mostrar un mensaje de "cargando" si aún no se ha recibido la respuesta -->
+    <ion-text *ngIf="!message">
+      <h3>Cargando...</h3>
+    </ion-text>
+  </div>
+</ion-content>
