@@ -19,4 +19,12 @@ export class TestsRequest {
 
     return this.http.get<any>(this.baseUrl, { headers });
   }
+
+  public delete(id:number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<any>(this.baseUrl + 'delete', { filmId: id },{headers});
+  }
+  
 }

@@ -20,11 +20,53 @@
         <ion-label>
           <p>{{film.filmId}}</p>
         </ion-label>
+
+        <ion-button (click)="delete(film.filmId)">
+          Eliminar
+        </ion-button>
       </ion-item>
     </ion-list>
 
     <ion-text *ngIf="loading">
       <h3>Cargando películas...</h3>
     </ion-text>
+  </div>
+
+  <div class="form">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Insertar</ion-card-title>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <form (ngSubmit)="save()">
+          <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input [(ngModel)]="title" name="title" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input [(ngModel)]="genre" name="title" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input [(ngModel)]="country" name="title" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input [(ngModel)]="releaseDate" name="title" type="date" required></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input [(ngModel)]="file" name="password" type="file" required></ion-input>
+          </ion-item>
+  
+          <ion-button expand="full" type="submit" [disabled]="!title || !file || !genre || !country || !releaseDate">
+            Log In
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

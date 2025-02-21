@@ -11,4 +11,13 @@ export class TestsFacade {
   public index(): Observable<any>{    
     return this.request.index();
   }
+
+  public delete(id: number): Observable<any> {
+    return this.request.delete(id).pipe(
+      map(response => {
+        return response;
+      })
+    );
+  }
+  
 }
