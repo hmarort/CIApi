@@ -1,19 +1,25 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Test de Conexión a la API
+      Listado de Películas
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="container">
-    <ion-text>
-      <h2>{{ message }}</h2>
-    </ion-text>
+    <ion-list *ngIf="!loading">
+      <ion-item *ngFor="let film of films">
+        <ion-label>
+          <h2>{{ film.title }}</h2>
+          <p>{{ film.description }}</p>
+          <p><strong>Actores:</strong> {{ film.actors }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
 
-    <ion-text *ngIf="!message">
-      <h3>Cargando...</h3>
+    <ion-text *ngIf="loading">
+      <h3>Cargando películas...</h3>
     </ion-text>
   </div>
 </ion-content>

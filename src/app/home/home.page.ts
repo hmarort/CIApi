@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { TestsFacade } from '../facades/tests.facade';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+
+interface Film {
+  filmId: number;
+  title: string;
+  description: string;
+  actors: string;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -10,7 +17,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HomePage implements OnInit {
 
-  message: String = '';
+  films: Film[] = [];
+  loading: boolean = true;
+
   constructor(
     private testFacade: TestsFacade,
     private router: Router
@@ -23,9 +32,13 @@ export class HomePage implements OnInit {
   loadTest() {
     this.testFacade.index().subscribe(
       (data) => {
-        this.message = data.message; 
+        this.films = data.message;
+        this.loading = false;
+      },
+      (error) => {
+        console.error('Error al cargar los datos:', error);
+        this.loading = false;
       }
     );
   }  
-
 }
