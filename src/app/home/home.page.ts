@@ -8,7 +8,7 @@ interface Film {
   description: string;
   actors: string;
   genre: string;
-  country:string;
+  country:string
 }
 
 @Component({
