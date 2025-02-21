@@ -19,5 +19,8 @@ export class TestsFacade {
       })
     );
   }
+  public save(filmData: FormData): Observable<any> {
+    return this.request.save(filmData);
+  }
   
 }

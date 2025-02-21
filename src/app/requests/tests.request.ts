@@ -24,7 +24,13 @@ export class TestsRequest {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.post<any>(this.baseUrl + 'delete', { filmId: id },{headers});
+    return this.http.post<any>(`${this.baseUrl}delete`, { filmId: id },{headers});
   }
-  
+  public save(filmData: FormData): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.post<any>(`${this.baseUrl}save`, filmData, { headers });
+  }
 }
