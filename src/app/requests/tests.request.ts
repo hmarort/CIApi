@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';  // Importa el servicio HttpClient, no HttpClientModule
+import { HttpClient, HttpHeaders } from '@angular/common/http';  // Importa el servicio HttpClient, no HttpClientModule
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TestsRequest {
-  baseUrl: string = 'https://apirest.saicasl.eu/api3/api/public/';
-  constructor(private http: HttpClient) { }  // Inyecta HttpClient aquí
+  private token: string = 'W66jQhYGGzEIuCcAXfpTJkt7uH6GBGpcJLCSXo6O2WF1AZkxiMXpypFaKEfA';
+  private baseUrl: string = 'https://apirest.saicasl.eu/api3/api/public/';
+
+  constructor(private http: HttpClient) { }
 
   public index(): Observable<any> {
-    return this.http.get(this.baseUrl);  // Realiza la solicitud GET con HttpClient
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.get<any>(this.baseUrl, { headers });
   }
 }

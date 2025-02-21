@@ -8,12 +8,10 @@
 
 <ion-content>
   <div class="container">
-    <!-- Mostrar el mensaje recibido de la API -->
     <ion-text>
       <h2>{{ message }}</h2>
     </ion-text>
 
-    <!-- Mostrar un mensaje de "cargando" si aún no se ha recibido la respuesta -->
     <ion-text *ngIf="!message">
       <h3>Cargando...</h3>
     </ion-text>

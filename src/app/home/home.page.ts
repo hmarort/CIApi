@@ -23,8 +23,9 @@ export class HomePage implements OnInit {
   loadTest() {
     this.testFacade.index().subscribe(
       (data) => {
-        this.message = data.message;
-      });
-  }
+        this.message = data.message; 
+      }
+    );
+  }  
 
 }
