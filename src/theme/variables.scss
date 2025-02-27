@@ -1,2 +1,55 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+/* Variables de colores personalizados */
+/* Variables de colores personalizados */
+:root {
+    --ion-color-primary: #B388EB;
+    /* Morado pastel */
+    --ion-color-primary-rgb: 179, 136, 235;
+    --ion-color-primary-contrast: #FFFFFF;
+    /* Blanco para texto contrastante */
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+
+    --ion-color-secondary: #9C4A9E;
+    /* Morado oscuro */
+    --ion-color-secondary-rgb: 156, 74, 158;
+    --ion-color-secondary-contrast: #FFFFFF;
+
+    --ion-color-tertiary: #6A1B9A;
+    /* Morado intenso */
+    --ion-color-tertiary-rgb: 106, 27, 154;
+
+    --ion-color-light: #F3E5F5;
+    /* Fondo claro */
+    --ion-color-dark: #4A148C;
+    /* Fondo oscuro */
+
+    /* Colores para tema oscuro */
+    --ion-color-dark-primary: #6A1B9A;
+    /* Ajuste para fondo oscuro */
+    --ion-color-dark-primary-contrast: #000000;
+
+    --ion-color-dark-secondary: #9C4A9E;
+    /* Morado más suave */
+    --ion-color-dark-secondary-contrast: #000000;
+
+    --ion-color-dark-tertiary: #B388EB;
+    /* Morado pastel claro */
+    --ion-color-dark-tertiary-contrast: #000000;
+}
+
+/* Colores para los fondos según el tema */
+body {
+    --background: var(--ion-color-light);
+    /* Fondo por defecto claro */
+    --text-color: var(--ion-color-dark);
+    /* Texto por defecto oscuro */
+
+    /* Si el tema es oscuro, cambiamos el fondo y el texto */
+    @media (prefers-color-scheme: dark) {
+        --background: var(--ion-color-dark);
+        /* Fondo oscuro */
+        --text-color: var(--ion-color-light);
+        /* Texto claro */
+    }
+}
