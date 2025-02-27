@@ -1,73 +1,70 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Listado de Películas
-    </ion-title>
+    <ion-title>FilmLab</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="container">
-    <ion-list *ngIf="!loading">
-      <ion-item *ngFor="let film of films">
-        <ion-label>
-          <h2>{{ film.title }}</h2>
-          <p>{{ film.description }}</p>
-          <p>{{ film.genre }}</p>
-          <p>{{ film.country }}</p>
-          <p><strong>Actores:</strong> {{ film.actors }}</p>
-        </ion-label>
-        <ion-label>
-          <p>{{film.filmId}}</p>
-          <p>{{film.date}}</p>
-        </ion-label>
+<ion-content class="ion-padding">
+  <div class="peliculas" *ngIf="!loading">
+    <!-- Cada película tiene su propia tarjeta -->
+    <div *ngFor="let film of films" class="pelicula">
+      <ion-card>
+        <img [src]="'data:image/jpeg;charset=utf-8;base64,' + film.base64" alt="No disponible">
+        <ion-card-header>
+          <ion-card-title>{{ film.title }}</ion-card-title>
+        </ion-card-header>
 
-        <!-- Botón de edición -->
-        <ion-button (click)="edit(film)">
-          Editar
-        </ion-button>
+        <ion-card-content>
+          <details>
+            <summary>Actores</summary>
+            <ul>
+              <li *ngFor="let actor of film.actors.split(', ')">{{ actor }}</li>
+            </ul>
+          </details>
 
-        <ion-button (click)="delete(film.filmId)">
-          Eliminar
-        </ion-button>
-      </ion-item>
-    </ion-list>
-
-    <ion-text *ngIf="loading">
-      <h3>Cargando películas...</h3>
-    </ion-text>
+          <!-- Botones de acción -->
+          <div class="botones">
+            <ion-button class="modificar" (click)="edit(film)">Editar</ion-button>
+            <ion-button class="eliminar" color="danger" (click)="delete(film.filmId)">Eliminar</ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 
+  <!-- Mensaje de carga -->
+  <ion-text *ngIf="loading" class="loading-text">
+    <h3>Cargando películas...</h3>
+  </ion-text>
+
+  <!-- Formulario de inserción o edición -->
   <div class="form">
     <ion-card>
       <ion-card-header>
         <ion-card-title>{{ filmId ? 'Editar' : 'Insertar' }} Película</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         <form (ngSubmit)="save()">
           <ion-item>
-            <ion-label position="floating">Title</ion-label>
-            <ion-input [(ngModel)]="title" name="title" required></ion-input>
+            <ion-input [(ngModel)]="title" name="title" required placeholder="Título"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Genre</ion-label>
-            <ion-input [(ngModel)]="genre" name="genre" required></ion-input>
+            <ion-input [(ngModel)]="genre" name="genre" required placeholder="Género"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Country</ion-label>
-            <ion-input [(ngModel)]="country" name="country" required></ion-input>
+            <ion-input [(ngModel)]="country" name="country" required placeholder="País"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Release Date</ion-label>
-            <ion-input [(ngModel)]="releaseDate" name="releaseDate" type="date" required></ion-input>
+            <ion-input [(ngModel)]="releaseDate" name="releaseDate" type="date" required
+              placeholder="Fecha de estreno"></ion-input>
           </ion-item>
-    
+
           <ion-item>
-            <ion-label position="floating">Poster</ion-label>
+            <ion-label>Póster</ion-label>
             <ion-input type="file" (change)="onFileSelected($event)" accept="image/*" [required]="!filmId"></ion-input>
           </ion-item>
-    
+
           <ion-button expand="full" type="submit" [disabled]="!validateForm()">
             {{ filmId ? 'Actualizar Película' : 'Guardar Película' }}
           </ion-button>

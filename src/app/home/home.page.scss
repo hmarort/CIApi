@@ -1,27 +1,122 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
+/* Reset general */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#container a {
-  text-decoration: none;
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--ion-background-color);
+  color: var(--ion-text-color);
+  line-height: 1.5;
+  padding: 20px;
+}
+
+.peliculas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.pelicula {
+  display: flex;
+  justify-content: center;
+}
+
+ion-card {
+  width: 100%;
+  background-color: var(--ion-card-background);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+ion-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+ion-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+ion-card-title {
+  color: var(--ion-color-primary);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.pelicula details {
+  padding: 0 15px 15px;
+}
+
+.pelicula details summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--ion-text-color);
+  margin-bottom: 10px;
+}
+
+.pelicula details ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.pelicula details ul li {
+  margin-bottom: 5px;
+  color: var(--ion-text-color);
+}
+
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.modificar, .eliminar {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.modificar {
+  color: white;
+}
+
+.modificar:hover {
+  background-color: var(--ion-color-primary);
+}
+
+.eliminar {
+  color: white;
+}
+
+.eliminar:hover {
+  background-color: var(--ion-color-danger);
+}
+
+.loading-text {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.form {
+  margin-top: 30px;
+}
+
+ion-card {
+  margin-top: 20px;
+}
+
+ion-button {
+  width: 100%;
+  margin-top: 20px;
 }

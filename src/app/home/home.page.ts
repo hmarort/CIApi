@@ -10,6 +10,7 @@ interface Film {
   genre: string;
   country: string;
   date: string;
+  base64:string;
 }
 
 @Component({
@@ -127,7 +128,7 @@ export class HomePage implements OnInit {
     this.country = '';
     this.releaseDate = '';
     this.file = new File([], "");
-    this.filmId = null; // Reseteamos el filmId
+    this.filmId = null;
   }
 
   onFileSelected(event: any) {
