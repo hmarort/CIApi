@@ -8,8 +8,8 @@ interface Film {
   description: string;
   actors: string;
   genre: string;
-  country:string;
-  date:string;
+  country: string;
+  date: string;
 }
 
 @Component({
@@ -22,11 +22,13 @@ export class HomePage implements OnInit {
 
   films: Film[] = [];
   loading: boolean = true;
-  public title:string ='';
-  public genre:string ='';
-  public country:string ='';
+  public filmId: number | null = null;
+  public title: string = '';
+  public genre: string = '';
+  public country: string = '';
   public releaseDate: string = '';
-  public file:File= new File([],"");
+  public file: File = new File([], "");
+  
   constructor(
     private testFacade: TestsFacade,
     private router: Router
@@ -48,12 +50,12 @@ export class HomePage implements OnInit {
       }
     );
   }
-  
+
   delete(id: number) {
     this.testFacade.delete(id).subscribe(
       (response) => {
         console.log('Película eliminada', response);
-        alert('Película eliminada: '+ response.message);
+        alert('Película eliminada: ' + response.message);
         this.loadTest(); // Recargar la lista de películas
       },
       (error) => {
@@ -61,33 +63,58 @@ export class HomePage implements OnInit {
       }
     );
   }
-  
+
+  // Función que se activa al seleccionar una película para editar
+  edit(film: Film) {
+    this.filmId = film.filmId;
+    this.title = film.title;
+    this.genre = film.genre;
+    this.country = film.country;
+    this.releaseDate = film.date;
+    // No necesitamos asignar file aquí, ya que la imagen de la película es opcional para editar
+  }
+
   save() {
+    const formData = this.createFormData();
+    const action = this.filmId ? 'editar' : 'guardar';
+
+    this.testFacade.save(formData).subscribe({
+      next: (response) => this.handleSuccess(response, action),
+      error: (error) => this.handleError(error, action)
+    });
+  }
+
+  private createFormData(): FormData {
     const formData = new FormData();
     formData.append('title', this.title);
     formData.append('genre', this.genre);
     formData.append('country', this.country);
     formData.append('date', this.releaseDate);
+
     if (this.file) {
       formData.append('poster', this.file, this.file.name);
     }
 
-    this.testFacade.save(formData).subscribe({
-      next: (response) => {
-        console.log('Película guardada', response);
-        alert('Película guardada correctamente');
-        this.resetForm();
-        this.loadTest(); // Recargar la lista de películas
-      },
-      error: (error) => {
-        console.error('Error al guardar la película:', error);
-        if (error.error && error.error.error) {
-          alert(error.error.error);
-        } else {
-          alert('Error al guardar la película');
-        }
-      }
-    });
+    if (this.filmId) {
+      formData.append('filmId', this.filmId.toString());
+    }
+
+    return formData;
+  }
+
+  private handleSuccess(response: any, action: string) {
+    console.log(`Película ${action}da`, response);
+    alert(`Película ${action}da correctamente`);
+    this.resetForm();
+    this.loadTest();
+  }
+
+  private handleError(error: any, action: string) {
+    console.error(`Error al ${action} la película:`, error);
+    const errorMessage = error.error && error.error.error
+      ? error.error.error
+      : `Error al ${action} la película`;
+    alert(errorMessage);
   }
 
   validateForm(): boolean {
@@ -100,6 +127,7 @@ export class HomePage implements OnInit {
     this.country = '';
     this.releaseDate = '';
     this.file = new File([], "");
+    this.filmId = null; // Reseteamos el filmId
   }
 
   onFileSelected(event: any) {
