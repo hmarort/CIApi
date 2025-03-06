@@ -30,12 +30,12 @@ export class HomePage implements OnInit {
   public country: string = '';
   public releaseDate: string = '';
   public file: File = new File([], "");
-  public isModalOpen: boolean = false; // Estado para el modal
+  public isModalOpen: boolean = false;
 
   constructor(
     private testFacade: TestsFacade,
     private router: Router,
-    private modalController: ModalController  // Inyectar ModalController
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
