@@ -34,12 +34,11 @@ export class TestsRequest {
     return this.http.post<any>(`${this.baseUrl}save`, filmData, { headers });
   }
 
-  public search(title?: string): Observable<any> {
+  public search(title: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    const body = title ? { title: title } : {};
 
-    return this.http.post<any>(`${this.baseUrl}/search`, body, { headers });
+    return this.http.post<any>(`${this.baseUrl}search`, {'title':title}, { headers });
   }
 }

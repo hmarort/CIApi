@@ -11,7 +11,7 @@ export class TestsFacade {
   public index(): Observable<any>{    
     return this.request.index();
   }
-  public search(title?: string): Observable<any>{    
+  public search(title: string): Observable<any>{    
     return this.request.search(title);
   }
 
