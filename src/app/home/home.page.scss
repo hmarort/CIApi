@@ -13,6 +13,17 @@ body {
   padding: 20px;
 }
 
+/* Ajustes del modal */
+ion-modal {
+  --width: 90%;
+  --max-width: 600px;
+  --min-width: 300px;
+  --height: auto;
+  --padding: 20px;
+  --border-radius: 12px;
+}
+
+/* Estilo de las tarjetas de las películas */
 .peliculas {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -73,7 +84,6 @@ ion-card-title {
   color: var(--ion-text-color);
 }
 
-
 .botones {
   display: flex;
   justify-content: space-between;
@@ -112,11 +122,38 @@ ion-card-title {
   margin-top: 30px;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+ion-item {
+  margin-bottom: 15px;
+}
+
+ion-button {
+  margin-top: 20px;
+}
+
+ion-button[expand='full'] {
+  margin-top: 10px;
+}
+
 ion-card {
   margin-top: 20px;
 }
 
-ion-button {
-  width: 100%;
-  margin-top: 20px;
+ion-card-header {
+  padding-bottom: 10px;
+}
+
+ion-card-title {
+  font-size: 22px;
+  text-align: center;
+}
+
+ion-label {
+  font-weight: bold;
+  color: var(--ion-text-color);
 }

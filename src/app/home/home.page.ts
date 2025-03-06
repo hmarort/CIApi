@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';  // Importar ModalController
 import { TestsFacade } from '../facades/tests.facade';
 import { Router } from '@angular/router';
 
@@ -10,7 +11,7 @@ interface Film {
   genre: string;
   country: string;
   date: string;
-  base64:string;
+  base64: string;
 }
 
 @Component({
@@ -29,10 +30,12 @@ export class HomePage implements OnInit {
   public country: string = '';
   public releaseDate: string = '';
   public file: File = new File([], "");
-  
+  public isModalOpen: boolean = false; // Estado para el modal
+
   constructor(
     private testFacade: TestsFacade,
-    private router: Router
+    private router: Router,
+    private modalController: ModalController  // Inyectar ModalController
   ) { }
 
   ngOnInit() {
@@ -57,7 +60,7 @@ export class HomePage implements OnInit {
       (response) => {
         console.log('Película eliminada', response);
         alert('Película eliminada: ' + response.message);
-        this.loadTest(); // Recargar la lista de películas
+        this.loadTest();
       },
       (error) => {
         console.error('Error al eliminar la película:', error);
@@ -65,14 +68,26 @@ export class HomePage implements OnInit {
     );
   }
 
-  // Función que se activa al seleccionar una película para editar
   edit(film: Film) {
     this.filmId = film.filmId;
     this.title = film.title;
     this.genre = film.genre;
     this.country = film.country;
     this.releaseDate = film.date;
-    // No necesitamos asignar file aquí, ya que la imagen de la película es opcional para editar
+  }
+
+  openModal(film?: Film) {
+    if (film) {
+      this.edit(film);
+    } else {
+      this.resetForm();
+    }
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.resetForm(); 
   }
 
   save() {
@@ -106,7 +121,7 @@ export class HomePage implements OnInit {
   private handleSuccess(response: any, action: string) {
     console.log(`Película ${action}da`, response);
     alert(`Película ${action}da correctamente`);
-    this.resetForm();
+    this.closeModal();
     this.loadTest();
   }
 

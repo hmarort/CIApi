@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+
   <div class="peliculas" *ngIf="!loading">
     <!-- Cada película tiene su propia tarjeta -->
     <div *ngFor="let film of films" class="pelicula">
@@ -22,9 +23,8 @@
             </ul>
           </details>
 
-          <!-- Botones de acción -->
           <div class="botones">
-            <ion-button class="modificar" (click)="edit(film)">Editar</ion-button>
+            <ion-button class="modificar" (click)="openModal(film)">Editar</ion-button>
             <ion-button class="eliminar" color="danger" (click)="delete(film.filmId)">Eliminar</ion-button>
           </div>
         </ion-card-content>
@@ -37,39 +37,43 @@
     <h3>Cargando películas...</h3>
   </ion-text>
 
-  <!-- Formulario de inserción o edición -->
-  <div class="form">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{ filmId ? 'Editar' : 'Insertar' }} Película</ion-card-title>
-      </ion-card-header>
+  <ion-modal [isOpen]="isModalOpen" (ionModalDidDismiss)="resetForm()">
+    <ng-template>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ filmId ? 'Editar' : 'Insertar' }} Película</ion-card-title>
+        </ion-card-header>
 
-      <ion-card-content>
-        <form (ngSubmit)="save()">
-          <ion-item>
-            <ion-input [(ngModel)]="title" name="title" required placeholder="Título"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input [(ngModel)]="genre" name="genre" required placeholder="Género"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input [(ngModel)]="country" name="country" required placeholder="País"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input [(ngModel)]="releaseDate" name="releaseDate" type="date" required
-              placeholder="Fecha de estreno"></ion-input>
-          </ion-item>
+        <ion-card-content>
+          <form (ngSubmit)="save()">
+            <ion-item>
+              <ion-input [(ngModel)]="title" name="title" required placeholder="Título"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input [(ngModel)]="genre" name="genre" required placeholder="Género"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input [(ngModel)]="country" name="country" required placeholder="País"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input [(ngModel)]="releaseDate" name="releaseDate" type="date" required placeholder="Fecha de estreno"></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-label>Póster</ion-label>
-            <ion-input type="file" (change)="onFileSelected($event)" accept="image/*" [required]="!filmId"></ion-input>
-          </ion-item>
+            <ion-item>
+              <ion-label>Póster</ion-label>
+              <ion-input type="file" (change)="onFileSelected($event)" accept="image/*" [required]="!filmId"></ion-input>
+            </ion-item>
 
-          <ion-button expand="full" type="submit" [disabled]="!validateForm()">
-            {{ filmId ? 'Actualizar Película' : 'Guardar Película' }}
-          </ion-button>
-        </form>
-      </ion-card-content>
-    </ion-card>
-  </div>
+            <ion-button expand="full" type="submit" [disabled]="!validateForm()">
+              {{ filmId ? 'Actualizar Película' : 'Guardar Película' }}
+            </ion-button>
+            <ion-button expand="full" color="danger" (click)="closeModal()">Cancelar</ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
+  </ion-modal>
+
+  <ion-button expand="full" (click)="openModal()">Insertar Película</ion-button>
+
 </ion-content>
