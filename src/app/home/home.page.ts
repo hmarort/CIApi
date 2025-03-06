@@ -55,7 +55,7 @@ export class HomePage implements OnInit {
     }
   
     // Realizamos la búsqueda con el término proporcionado
-    this.testFacade.index(this.searchTerm).subscribe({
+    this.testFacade.search(this.searchTerm).subscribe({
       next: (data) => {
         this.films = data.message;
         this.loading = false;

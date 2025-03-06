@@ -8,8 +8,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class TestsFacade {
   constructor(private request: TestsRequest) { }
 
-  public index(title?: string): Observable<any>{    
-    return this.request.index(title);
+  public index(): Observable<any>{    
+    return this.request.index();
+  }
+  public search(title?: string): Observable<any>{    
+    return this.request.search(title);
   }
 
   public delete(id: number): Observable<any> {
