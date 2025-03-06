@@ -26,6 +26,7 @@ export class HomePage implements OnInit {
   loading: boolean = true;
   public filmId: number | null = null;
   public title: string = '';
+  public searchTerm: string = '';
   public genre: string = '';
   public country: string = '';
   public releaseDate: string = '';
@@ -42,6 +43,31 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     await this.loadTest();
   }
+
+  search(event?: any) {
+    this.loading = true;
+    if (!this.searchTerm || this.searchTerm.trim() === '') {
+      this.loadTest();
+      return;
+    }
+  
+    this.testFacade.index(this.searchTerm).subscribe({
+      next: (data) => {
+        this.films = data.message;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al buscar películas:', error);
+        this.loading = false;
+      },
+      complete: () => {
+        if (event && event.target) {
+          event.target.complete();
+        }
+      }
+    });
+  }
+  
 
   doRefresh(event: any) {
     this.loading = true;

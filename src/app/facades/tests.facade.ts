@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class TestsFacade {
   constructor(private request: TestsRequest) { }
 
-  public index(): Observable<any>{    
+  public index(title?: string): Observable<any>{    
     return this.request.index();
   }
 

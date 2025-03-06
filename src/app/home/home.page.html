@@ -1,13 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>FilmLab</ion-title>
+    <ion-buttons slot="end" class="search-container">
+      <ion-input type="search" placeholder="Buscar película" [(ngModel)]="searchTerm" (ionChange)="search($event)"
+        debounce="500">
+      </ion-input>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+
 <ion-content class="ion-padding">
   <ion-button class="btn-flotante" expand="full" (click)="openModal()">Insertar Película</ion-button>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="chevron-down-circle-outline">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline">
     </ion-refresher-content>
   </ion-refresher>
 
@@ -55,12 +61,14 @@
               <ion-input [(ngModel)]="country" name="country" required placeholder="País"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input [(ngModel)]="releaseDate" name="releaseDate" type="date" required placeholder="Fecha de estreno"></ion-input>
+              <ion-input [(ngModel)]="releaseDate" name="releaseDate" type="date" required
+                placeholder="Fecha de estreno"></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label>Póster</ion-label>
-              <ion-input type="file" (change)="onFileSelected($event)" accept="image/*" [required]="!filmId"></ion-input>
+              <ion-input type="file" (change)="onFileSelected($event)" accept="image/*"
+                [required]="!filmId"></ion-input>
             </ion-item>
 
             <ion-button expand="full" type="submit" [disabled]="!validateForm()">

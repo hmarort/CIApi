@@ -11,20 +11,21 @@ export class TestsRequest {
 
   constructor(private http: HttpClient) { }
 
-  public index(): Observable<any> {
-    
+  public index(title?: string): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
 
-    return this.http.get<any>(this.baseUrl, { headers });
+    const body = title ? { title: title } : {};
+
+    return this.http.post<any>(`${this.baseUrl}`, body, { headers });
   }
 
-  public delete(id:number): Observable<any> {
+  public delete(id: number): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.post<any>(`${this.baseUrl}delete`, { filmId: id },{headers});
+    return this.http.post<any>(`${this.baseUrl}delete`, { filmId: id }, { headers });
   }
   public save(filmData: FormData): Observable<any> {
     const headers = new HttpHeaders({

@@ -166,7 +166,7 @@ ion-label {
   letter-spacing: 1px;
   padding: 10px 15px;
   position: fixed;
-  top: 4em;
+  top: 6em;
   right: 20px;
   transition: all 300ms ease 0ms;
   cursor: pointer;
@@ -176,4 +176,12 @@ ion-label {
 .btn-flotante:hover {
   color: #ffffff;
   transform: translateY(-3px);
+}
+
+.search-container {
+  padding-right: 15px;  /* Ajusta este valor según lo necesites */
+}
+
+ion-input {
+  width: 100%;  /* Asegura que el input ocupe todo el ancho disponible */
 }
