@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';  // Importar ModalController
+import { ModalController, LoadingController } from '@ionic/angular';  // Importar ModalController
 import { TestsFacade } from '../facades/tests.facade';
 import { Router } from '@angular/router';
 
@@ -35,26 +35,35 @@ export class HomePage implements OnInit {
   constructor(
     private testFacade: TestsFacade,
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private loadingController: LoadingController
   ) { }
 
-  ngOnInit() {
-    this.loadTest();
+  async ngOnInit() {
+    await this.loadTest();
   }
 
-  loadTest() {
+  doRefresh(event: any) {
+    this.loading = true;
+    this.loadTest(event);
+  }
+
+  loadTest(event?: any) {
     this.loading = true;
     this.testFacade.index().subscribe(
       (data) => {
         this.films = data.message;
         this.loading = false;
+        if (event) event.target.complete();
       },
       (error) => {
         console.error('Error al cargar los datos:', error);
         this.loading = false;
+        if (event) event.target.complete();
       }
     );
   }
+
 
 
   delete(id: number) {
@@ -153,16 +162,6 @@ export class HomePage implements OnInit {
     if (file) {
       this.file = file;
     }
-  }
-
-  doRefresh(event: any) {
-    console.log('Comenzando operación de actualización');
-    this.loadTest();
-
-    setTimeout(() => {
-      console.log('Operación de actualización completada');
-      event.target.complete();
-    }, 2000);
   }
 
 }

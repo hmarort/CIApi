@@ -3,19 +3,15 @@
     <ion-title>FilmLab</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="ion-padding">
+  <ion-button class="btn-flotante" expand="full" (click)="openModal()">Insertar Película</ion-button>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
-      pullingIcon="chevron-down-circle-outline"
-      pullingText="Desliza para actualizar"
-      refreshingSpinner="circles"
-      refreshingText="Actualizando...">
+      pullingIcon="chevron-down-circle-outline">
     </ion-refresher-content>
   </ion-refresher>
 
   <div class="peliculas" *ngIf="!loading">
-    <!-- Cada película tiene su propia tarjeta -->
     <div *ngFor="let film of films" class="pelicula">
       <ion-card>
         <img [src]="'data:image/jpeg;charset=utf-8;base64,' + film.base64" alt="No disponible">
@@ -39,11 +35,6 @@
       </ion-card>
     </div>
   </div>
-
-  <!-- Mensaje de carga -->
-  <ion-text *ngIf="loading" class="loading-text">
-    <h3>Cargando películas...</h3>
-  </ion-text>
 
   <ion-modal [isOpen]="isModalOpen" (ionModalDidDismiss)="resetForm()">
     <ng-template>
@@ -81,7 +72,8 @@
       </ion-card>
     </ng-template>
   </ion-modal>
-
-  <ion-button expand="full" (click)="openModal()">Insertar Película</ion-button>
-
+</ion-content>
+<ion-content class="ion-padding">
+  <ion-loading [isOpen]="loading" message="Cargando películas..."></ion-loading>
+  <!-- Resto del contenido -->
 </ion-content>
