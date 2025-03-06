@@ -43,6 +43,7 @@ export class HomePage implements OnInit {
   }
 
   loadTest() {
+    this.loading = true;
     this.testFacade.index().subscribe(
       (data) => {
         this.films = data.message;
@@ -54,6 +55,7 @@ export class HomePage implements OnInit {
       }
     );
   }
+
 
   delete(id: number) {
     this.testFacade.delete(id).subscribe(
@@ -87,7 +89,7 @@ export class HomePage implements OnInit {
 
   closeModal() {
     this.isModalOpen = false;
-    this.resetForm(); 
+    this.resetForm();
   }
 
   save() {
@@ -152,4 +154,15 @@ export class HomePage implements OnInit {
       this.file = file;
     }
   }
+
+  doRefresh(event: any) {
+    console.log('Comenzando operación de actualización');
+    this.loadTest();
+
+    setTimeout(() => {
+      console.log('Operación de actualización completada');
+      event.target.complete();
+    }, 2000);
+  }
+
 }
