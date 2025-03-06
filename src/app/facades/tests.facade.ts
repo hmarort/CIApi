@@ -9,7 +9,7 @@ export class TestsFacade {
   constructor(private request: TestsRequest) { }
 
   public index(title?: string): Observable<any>{    
-    return this.request.index();
+    return this.request.index(title);
   }
 
   public delete(id: number): Observable<any> {

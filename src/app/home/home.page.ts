@@ -46,11 +46,15 @@ export class HomePage implements OnInit {
 
   search(event?: any) {
     this.loading = true;
+    console.log('Función search llamada con término:', this.searchTerm);
+  
+    // Si no hay término de búsqueda, cargamos todos los datos
     if (!this.searchTerm || this.searchTerm.trim() === '') {
       this.loadTest();
       return;
     }
   
+    // Realizamos la búsqueda con el término proporcionado
     this.testFacade.index(this.searchTerm).subscribe({
       next: (data) => {
         this.films = data.message;
@@ -61,13 +65,15 @@ export class HomePage implements OnInit {
         this.loading = false;
       },
       complete: () => {
-        if (event && event.target) {
+        // Solo llamamos a complete si event es un refresher
+        if (event && event.target && typeof event.target.complete === 'function') {
           event.target.complete();
         }
       }
     });
   }
-  
+
+
 
   doRefresh(event: any) {
     this.loading = true;

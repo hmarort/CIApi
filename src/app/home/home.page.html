@@ -2,8 +2,7 @@
   <ion-toolbar>
     <ion-title>FilmLab</ion-title>
     <ion-buttons slot="end" class="search-container">
-      <ion-input type="search" placeholder="Buscar película" [(ngModel)]="searchTerm" (ionChange)="search($event)"
-        debounce="500">
+      <ion-input type="search" placeholder="Buscar película" [(ngModel)]="searchTerm" (ionInput)="search($event)" debounce="500">
       </ion-input>
     </ion-buttons>
   </ion-toolbar>
