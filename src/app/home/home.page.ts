@@ -206,13 +206,13 @@ export class HomePage implements OnInit {
       }
       return;
     }
-    try{
+    try {
       const result = await BarcodeScanner.startScan();
       if (result.hasContent) {
         this.searchTerm = result.content;
         this.search();
       }
-    }catch(error){
+    } catch (error) {
       console.error('Error al escanear el código: ', error);
     }
   }
