@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, LoadingController } from '@ionic/angular';  // Importar ModalController
-import { TestsFacade } from '../facades/tests.facade';
+import { TestsFacade } from '../share/conexion_api/facades/tests.facade';
 import { Router } from '@angular/router';
 
 interface Film {
