@@ -8,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class TestsFacade {
   constructor(private request: TestsRequest) { }
 
+  /** Films */
   public index(): Observable<any>{    
     return this.request.index();
   }
@@ -26,4 +27,12 @@ export class TestsFacade {
     return this.request.save(filmData);
   }
   
+  /** Users */
+  public find(username: string, password: string): Observable<any> {
+    return this.request.find(username, password);
+  }
+  
+  public sign(userData: any): Observable<any> {
+    return this.request.sign(userData);
+  }
 }

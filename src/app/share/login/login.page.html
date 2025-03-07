@@ -18,12 +18,11 @@
       </ion-input>
     </ion-item>
 
-
     <ion-button class="ion-margin-top" shape="round" color="primary" expand="block" (click)="login()">
       Iniciar sesión
     </ion-button>
-    <ion-button class="ion-margin-top" shape="round" color="primary" expand="block" (click)="performBiometricVerificatin()">
-      Inicio de sesion biométrico
+    <ion-button class="ion-margin-top" shape="round" color="primary" expand="block" (click)="performBiometricVerification()">
+      Inicio de sesión biométrico
     </ion-button>
 
     <ion-button class="ion-margin-top" shape="round" color="secondary" expand="block" (click)="openRegisterModal()">
@@ -46,31 +45,26 @@
       <ion-content class="ion-padding">
         <form (ngSubmit)="signIn()">
           <ion-item>
-            <ion-input [(ngModel)]="registerData.name" name="name" label="Nombre" placeholder="Ingrese su nombre">
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input [(ngModel)]="registerData.name" name="name" placeholder="Ingrese su nombre">
             </ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input [(ngModel)]="registerData.lastName" name="lastName" label="Apellidos"
-              placeholder="Ingrese sus apellidos">
+            <ion-label position="floating">Email</ion-label>
+            <ion-input [(ngModel)]="registerData.email" name="email" type="email" placeholder="Ingrese su email">
             </ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input [(ngModel)]="registerData.email" name="email" label="Email" type="email"
-              placeholder="Ingrese su email">
+            <ion-label position="floating">Nombre de usuario</ion-label>
+            <ion-input [(ngModel)]="registerData.username" name="username" placeholder="Elija un nombre de usuario">
             </ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input [(ngModel)]="registerData.username" name="username" label="Nombre de usuario"
-              placeholder="Elija un nombre de usuario">
-            </ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-input [(ngModel)]="registerData.password" name="password" label="Contraseña" type="password"
-              placeholder="Ingrese una contraseña">
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input [(ngModel)]="registerData.password" name="password" type="password" placeholder="Ingrese una contraseña">
             </ion-input>
           </ion-item>
 

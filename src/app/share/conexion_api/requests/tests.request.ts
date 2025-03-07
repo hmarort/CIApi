@@ -11,8 +11,9 @@ export class TestsRequest {
 
   constructor(private http: HttpClient) { }
 
+  /** Films */
   public index(): Observable<any> {
-    
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
@@ -20,11 +21,11 @@ export class TestsRequest {
     return this.http.get<any>(this.baseUrl, { headers });
   }
 
-  public delete(id:number): Observable<any> {
+  public delete(id: number): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.post<any>(`${this.baseUrl}delete`, { filmId: id },{headers});
+    return this.http.post<any>(`${this.baseUrl}delete`, { filmId: id }, { headers });
   }
   public save(filmData: FormData): Observable<any> {
     const headers = new HttpHeaders({
@@ -39,6 +40,27 @@ export class TestsRequest {
       'Authorization': `Bearer ${this.token}`
     });
 
-    return this.http.post<any>(`${this.baseUrl}search`, {'title':title}, { headers });
+    return this.http.post<any>(`${this.baseUrl}search`, { 'title': title }, { headers });
   }
+
+  /** Users */
+  public find(username: string, password: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<any>(`${this.baseUrl}find`, { 'username': username, 'password': password }, { headers });
+  }
+
+  public sign(userData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.post<any>(`${this.baseUrl}sign`, userData, { headers });
+  }
+
+
 }
