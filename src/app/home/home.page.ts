@@ -198,14 +198,10 @@ export class HomePage implements OnInit {
   }
 
   async escanearCodigo(): Promise<any> {
-    // Chequeamos que se tenga permiso para utilizar la cámara
     const status = await BarcodeScanner.checkPermission();
     if (status.denied) {
-      // El usuario denegó permisos
-      // Preguntamos si quiere redirigir a la configuración de la app
       const c = confirm('Si quieres dar permisos a la aplicación, por favor ve a la configuración.');
       if (c) {
-        // Redirigimos al usuario a la configuración de la app
         BarcodeScanner.openAppSettings();
       }
       return;
@@ -220,6 +216,5 @@ export class HomePage implements OnInit {
       console.error('Error al escanear el código: ', error);
     }
   }
-
 
 }
