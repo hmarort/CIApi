@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, LoadingController } from '@ionic/angular';  // Importar ModalController
 import { TestsFacade } from '../share/conexion_api/facades/tests.facade';
 import { Router } from '@angular/router';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 interface Film {
   filmId: number;
@@ -47,13 +48,13 @@ export class HomePage implements OnInit {
   search(event?: any) {
     this.loading = true;
     console.log('Función search llamada con término:', this.searchTerm);
-  
+
     // Si no hay término de búsqueda, cargamos todos los datos
     if (!this.searchTerm || this.searchTerm.trim() === '') {
       this.loadTest();
       return;
     }
-  
+
     // Realizamos la búsqueda con el término proporcionado
     this.testFacade.search(this.searchTerm).subscribe({
       next: (data) => {
@@ -195,5 +196,30 @@ export class HomePage implements OnInit {
       this.file = file;
     }
   }
+
+  async escanearCodigo(): Promise<any> {
+    // Chequeamos que se tenga permiso para utilizar la cámara
+    const status = await BarcodeScanner.checkPermission();
+    if (status.denied) {
+      // El usuario denegó permisos
+      // Preguntamos si quiere redirigir a la configuración de la app
+      const c = confirm('Si quieres dar permisos a la aplicación, por favor ve a la configuración.');
+      if (c) {
+        // Redirigimos al usuario a la configuración de la app
+        BarcodeScanner.openAppSettings();
+      }
+      return;
+    }
+    try{
+      const result = await BarcodeScanner.startScan();
+      if (result.hasContent) {
+        this.searchTerm = result.content;
+        this.search();
+      }
+    }catch(error){
+      console.error('Error al escanear el código: ', error);
+    }
+  }
+
 
 }
