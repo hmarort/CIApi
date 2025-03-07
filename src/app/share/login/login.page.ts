@@ -60,9 +60,8 @@ export class LoginPage {
   }
 
   signIn() {
-    console.log('Datos antes de enviar:', this.registerData);  // Verifica los datos antes de enviar
+    console.log('Datos antes de enviar:', this.registerData);
 
-    // Asegúrate de que los datos estén bien formados
     if (this.registerData.name && this.registerData.username && this.registerData.email && this.registerData.password) {
       const userData = this.createUserData();
       this.testFacade.sign(userData).subscribe(
@@ -79,11 +78,35 @@ export class LoginPage {
     }
   }
 
-  login() {
+  async login() {
     this.testFacade.find(this.username, this.password).subscribe(
-      (response) => {
+      async (response) => {
         if (response && response.message) {
-          this.presentAlert(true);
+          // Preguntar al usuario si desea guardar sus credenciales
+          const saveDataAlert = await this.alertController.create({
+            header: 'Guardar Credenciales',
+            message: '¿Desea guardar sus credenciales para futuras sesiones?',
+            buttons: [
+              {
+                text: 'No',
+                role: 'cancel',
+                handler: () => {
+                  this.presentAlert(true);
+                }
+              },
+              {
+                text: 'Sí',
+                handler: async () => {
+                  await this.saveLoginData(this.username, this.password);
+                  this.username='';
+                  this.password='';
+                  this.presentAlert(true);
+                }
+              }
+            ]
+          });
+  
+          await saveDataAlert.present();
         } else {
           this.presentAlert();
         }
@@ -93,6 +116,46 @@ export class LoginPage {
         this.presentAlert();
       }
     );
+  }
+
+  async saveLoginData(username: string, password: string) {
+    localStorage.setItem('username', username);
+    localStorage.setItem('password', password);
+  }
+
+  async performBiometricVerification() {
+    const result = await NativeBiometric.isAvailable();
+
+    if (!result.isAvailable) return;
+
+    const isFaceID = result.biometryType == BiometryType.FACE_ID;
+
+    const verified = await NativeBiometric.verifyIdentity({
+      title: "Iniciar sesión",
+    }).then(() => true).catch(() => false);
+
+    if (!verified) return;
+
+    const storedUsername = localStorage.getItem('username');
+    const storedPassword = localStorage.getItem('password');
+
+    if (storedUsername && storedPassword) {
+      this.testFacade.find(storedUsername, storedPassword).subscribe(
+        (response) => {
+          if (response && response.message) {
+            this.router.navigate(['/home']);
+          } else {
+            console.log('Credenciales inválidas');
+          }
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    } else {
+      alert('No hay datos de inicio de sesión guardados');
+      console.log('No hay datos de inicio de sesión guardados');
+    }
   }
 
   async presentAlert(boolean = false) {
@@ -118,25 +181,6 @@ export class LoginPage {
 
       await alert.present();
     }
-  }
-
-  async performBiometricVerification() {
-    const result = await NativeBiometric.isAvailable();
-
-    if (!result.isAvailable) return;
-
-    const isFaceID = result.biometryType == BiometryType.FACE_ID;
-
-    const verified = await NativeBiometric.verifyIdentity({
-      title: "Iniciar sesión",
-    }).then(() => true).catch(() => false);
-
-    if (!verified) return;
-    else this.router.navigate(['/home']);
-
-    const credentials = await NativeBiometric.getCredentials({
-      server: "www.example.com",
-    });
   }
 
   private createUserData(): any {
