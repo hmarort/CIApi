@@ -1,13 +1,84 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div class="login-form">
+    <ion-item>
+      <ion-label position="floating">Usuario</ion-label>
+      <ion-input id="username" [(ngModel)]="username" placeholder="Ingrese su nombre de usuario" clearInput>
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input id="password" [(ngModel)]="password" type="password" placeholder="Ingrese su contraseña" clearInput>
+      </ion-input>
+    </ion-item>
+
+
+    <ion-button class="ion-margin-top" shape="round" color="primary" expand="block" (click)="login()">
+      Iniciar sesión
+    </ion-button>
+    <ion-button class="ion-margin-top" shape="round" color="primary" expand="block" (click)="performBiometricVerificatin()">
+      Inicio de sesion biométrico
+    </ion-button>
+
+    <ion-button class="ion-margin-top" shape="round" color="secondary" expand="block" (click)="openRegisterModal()">
+      Registrarse
+    </ion-button>
+  </div>
+
+  <!-- Modal de registro -->
+  <ion-modal [isOpen]="isRegisterModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Registro</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeRegisterModal()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <form (ngSubmit)="signIn()">
+          <ion-item>
+            <ion-input [(ngModel)]="registerData.name" name="name" label="Nombre" placeholder="Ingrese su nombre">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input [(ngModel)]="registerData.lastName" name="lastName" label="Apellidos"
+              placeholder="Ingrese sus apellidos">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input [(ngModel)]="registerData.email" name="email" label="Email" type="email"
+              placeholder="Ingrese su email">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input [(ngModel)]="registerData.username" name="username" label="Nombre de usuario"
+              placeholder="Elija un nombre de usuario">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input [(ngModel)]="registerData.password" name="password" label="Contraseña" type="password"
+              placeholder="Ingrese una contraseña">
+            </ion-input>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" color="primary">
+            Registrarse
+          </ion-button>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
